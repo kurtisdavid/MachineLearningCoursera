@@ -20,10 +20,14 @@ grad = zeros(size(theta));
 % Note: grad should have the same dimensions as theta
 %
 
+% calculate h vector (m x 1)
 h = sigmoid(X*theta);
-J = (-y.'*log(h) - (1-y.')*log(1-h))/length(y);
 
+% vectorized J value
+J = (-y.'*log(h) - (1-y.')*log(1-h))/m;
 
+% vectorized gradient
+grad = ((h-y).'*X)/m;
 
 
 % =============================================================
