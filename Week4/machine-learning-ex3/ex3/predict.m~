@@ -24,10 +24,10 @@ p = zeros(size(X, 1), 1);
 %       can use max(A, [], 2) to obtain the max for each row.
 %
 
-% output of hidden layer, adding bias
+% output of hidden layer
 z2 = [ones(m,1) sigmoid(X*Theta1.')];
 
-% output of output layer + predictions
+% output of output layer + 
 [z3,p] = max(sigmoid(z2*Theta2.'),[],2);
 
 
