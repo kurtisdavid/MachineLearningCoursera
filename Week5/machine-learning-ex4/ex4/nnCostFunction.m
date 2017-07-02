@@ -65,30 +65,36 @@ K = size(y,1);
 %               and Theta2_grad from Part 2.
 %
 
-% add 1s for bias
-X = [ones(m,1) X];
+y_new = [zeros(m,10)];
 
-y_new = [zeros(K,10)];
-
-for i = 1:K
+for i = 1:m
     
     y_new(i,y(i)) = 1;
+    
 end
 y = y_new;
-display(y);
+sums = zeros(10,1);
+
+
+p = predict(Theta1,Theta2,X);
+
+h = zeros(size(y));
+
+for i = 1:m
+    
+    h(i,p(i)) = 1; 
 return
+
+display(sum(h(:,9)));
+return;
 % loop through possible classes
 for k = 1:10
     
-    % feedforward calculations from Week4
-    z2 = [ones(m,1) sigmoid(X*Theta1.')];
-    
-    [h,p] = max(sigmoid(z2*Theta2.'),[],2);
-    
-    J = J + (-y(k,2).'*log(h) - (1-y(k,2).')*log(1-h))/m;
+    sums(i) = sum((-y(:,k).'*log(h(:,k)) - (1-y(:,k).')*log(1-h(:,k)))/m);
     
 end
 
+J = sum(sums);
 
 
 
