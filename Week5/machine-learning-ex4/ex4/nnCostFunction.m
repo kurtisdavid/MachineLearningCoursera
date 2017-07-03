@@ -24,13 +24,10 @@ Theta2 = reshape(nn_params((1 + (hidden_layer_size * (input_layer_size + 1))):en
 
 % Setup some useful variables
 m = size(X, 1);
-         
 % You need to return the following variables correctly 
 J = 0;
 Theta1_grad = zeros(size(Theta1));
 Theta2_grad = zeros(size(Theta2));
-
-K = size(y,1);
 
 
 % ====================== YOUR CODE HERE ======================
@@ -65,36 +62,33 @@ K = size(y,1);
 %               and Theta2_grad from Part 2.
 %
 
-y_new = [zeros(m,10)];
-
+% reshape y into 1 hot encodings
+y_new = [zeros(m,num_labels)];
 for i = 1:m
     
     y_new(i,y(i)) = 1;
     
 end
 y = y_new;
-sums = zeros(10,1);
 
+sums = zeros(num_labels,1);
 
-p = predict(Theta1,Theta2,X);
+% from predict
+h1 = sigmoid([ones(m, 1) X] * Theta1');
+h = sigmoid([ones(m, 1) h1] * Theta2');
 
-h = zeros(size(y));
-
-for i = 1:m
-    
-    h(i,p(i)) = 1; 
-return
-
-display(sum(h(:,9)));
-return;
 % loop through possible classes
-for k = 1:10
-    
-    sums(i) = sum((-y(:,k).'*log(h(:,k)) - (1-y(:,k).')*log(1-h(:,k)))/m);
+for k = 1:num_labels
+   
+    sums(k) = sum((-y(:,k).'*log(h(:,k)) - (1-y(:,k).')*log(1-h(:,k))))/m;
     
 end
 
-J = sum(sums);
+% regularization term vectorized
+reg = lambda/(2*m)*(sum(sum(Theta1(:,2:size(Theta1,2)).^2)) + sum(sum(Theta2(:,2:size(Theta2,2)).^2)));
+
+% resultant cost
+J = sum(sums) + reg;
 
 
 

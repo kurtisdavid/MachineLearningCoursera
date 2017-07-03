@@ -43,7 +43,7 @@ for j = 1:display_rows
 						reshape(X(curr_ex, :), example_height, example_width) / max_val;
 		curr_ex = curr_ex + 1;
 	end
-	if curr_ex > m, 
+	if curr_ex > m 
 		break; 
 	end
 end
