@@ -112,11 +112,11 @@ for i = 1:m
 
 end
 
-% divide by # inputs + add regularization
-Theta1_grad = Theta1_grad/m;
-Theta2_grad = Theta2_grad/m;
-Theta1_grad(:,2:end) = Theta1_grad(:,2:end) + lambda/m * Theta1(:,2:end);
-Theta2_grad(:,2:end) = Theta2_grad(:,2:end) + lambda/m * Theta2(:,2:end);
+% divide by # inputs + add
+Theta1_grad = Theta1_grad/m + [zeros()lambda/m*Theta1(:,2:end);
+Theta2_grad = Theta2_grad/m + lambda/m*Theta2(:,2:end);
+
+
 
 
 
